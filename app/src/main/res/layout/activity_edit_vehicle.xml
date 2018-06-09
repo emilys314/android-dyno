@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.example.max.appspeedometer.EditVehicleActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:titleTextColor="@android:color/white"
+        android:background="?attr/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Vehicle Name" />
+
+    <EditText
+        android:id="@+id/editDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="Vehicle Description" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/text1st"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1st:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/edit1st"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="3.1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/text2nd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2nd:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/edit2nd"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="1.9" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/text3rd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3rd:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/edit3rd"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="1.3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/text4th"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4th:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/edit4th"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="1.0" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textFinal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Final:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/editFinal"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="4.3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textMass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mass:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/editMass"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="2300" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textRadius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Radius:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/editRadius"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="12" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/textDrag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Drag:"
+            android:textSize="20dp"/>
+
+        <EditText
+            android:id="@+id/editDrag"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="0.3" />
+
+    </LinearLayout>
+
+</LinearLayout>

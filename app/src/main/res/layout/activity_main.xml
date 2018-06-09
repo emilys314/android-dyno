@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.max.appspeedometer.MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true">
+
+        <Button
+            android:id="@+id/btnDyno"
+            android:text="Dyno"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="10dp"
+            android:onClick="onClickDyno"/>
+
+        <Button
+            android:id="@+id/btnMonitor"
+            android:text="Monitor"
+            android:layout_below="@+id/btnDyno"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="onClickMonitor"/>
+
+        <Button
+            android:id="@+id/btnLogs"
+            android:text="Logs"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="onClickLogs"/>
+
+        <Button
+            android:id="@+id/btnVehicles"
+            android:text="Vehicles"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="onClickVehicles"/>
+
+        <Button
+            android:id="@+id/btnCalculator"
+            android:text="Calculator"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="onClickCalculator"/>
+
+        <Button
+            android:id="@+id/btnSettings"
+            android:text="Settings"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="onClickSettings"/>
+    </LinearLayout>
+</RelativeLayout>
