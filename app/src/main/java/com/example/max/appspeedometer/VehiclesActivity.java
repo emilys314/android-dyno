@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,14 +18,12 @@ import java.util.ArrayList;
 
 public class VehiclesActivity extends AppCompatActivity {
 
-    String[] mobileArray = {"Android","IPhone","WindowsMobile","Blackberry",
-            "WebOS","Ubuntu","Windows7","Max OS X"};
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles);
 
+        //toolbar stuff
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Vehicles");
         setSupportActionBar(toolbar);getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -35,12 +34,28 @@ public class VehiclesActivity extends AppCompatActivity {
             }
         });
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,
-                R.layout.activity_list_item, mobileArray);
+        //list view array stuff
+        ArrayList<VehicleData> vehicles = new ArrayList<>();
+        VehicleData vehicle1 = new VehicleData();
+        vehicle1.setName("Miata");
+        vehicles.add(vehicle1);
+        VehicleData vehicle2 = new VehicleData();
+        vehicle2.setName("FRS");
+        vehicles.add(vehicle2);
 
+        //list view stuff
+        VehicleListAdapter vehicleListAdapter = new VehicleListAdapter(this, vehicles);
         ListView listView = (ListView) findViewById(R.id.vehicles_list_view);
-        listView.setAdapter(adapter);
+        listView.setAdapter(vehicleListAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(),"Click ListItem Number " + position, Toast.LENGTH_LONG).show();
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
