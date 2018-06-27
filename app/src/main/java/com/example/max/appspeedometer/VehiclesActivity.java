@@ -51,7 +51,7 @@ public class VehiclesActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(),"Click ListItem Number " + position, Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(),"Click ListItem Number " + position, Toast.LENGTH_LONG).show();
             }
         });
     }

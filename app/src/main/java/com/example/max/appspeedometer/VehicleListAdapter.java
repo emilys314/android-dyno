@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -25,31 +26,35 @@ public class VehicleListAdapter extends BaseAdapter {
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    //1
     @Override
     public int getCount() {
         return mDataSource.size();
     }
 
-    //2
     @Override
     public Object getItem(int position) {
         return mDataSource.get(position);
     }
 
-    //3
     @Override
     public long getItemId(int position) {
         return position;
     }
 
-    //4
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get view for row item
         View rowView = mInflater.inflate(R.layout.activity_vehicles_list_item, parent, false);
         TextView titleTextView = (TextView) rowView.findViewById(R.id.vehicles_list_item_title);
         ImageButton editImageButton = (ImageButton) rowView.findViewById(R.id.vehicles_list_item_button);
+
+        editImageButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View arg){
+                Toast.makeText(mContext,"Click editImage ", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         //fill in data
         VehicleData vehicleData = (VehicleData) getItem(position);
@@ -58,4 +63,6 @@ public class VehicleListAdapter extends BaseAdapter {
 
         return rowView;
     }
+
+
 }
