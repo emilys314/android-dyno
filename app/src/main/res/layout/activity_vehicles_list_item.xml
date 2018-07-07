@@ -19,7 +19,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/ic_menu_edit"
-        android:layout_weight="0"
-        android:onClick="onClickVehicleItemEdit"/>
+        android:layout_weight="0"/>
 
 </LinearLayout>

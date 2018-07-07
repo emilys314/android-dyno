@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
@@ -32,6 +33,8 @@ public class RecordingActivity extends AppCompatActivity {
     private EditText editWeight;
     private EditText editCurrentGear;
 
+    private TextView txtCurrentVehicle;
+
     private boolean record = true;
     private GraphView graphSpeedAccel;
     private GraphView graphTorqueHP;
@@ -53,6 +56,8 @@ public class RecordingActivity extends AppCompatActivity {
         txtAccel = (TextView) findViewById(R.id.txtAccel);
         txtMaxAccel = (TextView) findViewById(R.id.txtMaxAccel);
         btnToggle = (Button) findViewById(R.id.btnToggleTable);
+
+        txtCurrentVehicle = (TextView) findViewById(R.id.textRecordingCurrentVehicle);
 
         editGear1 = (EditText) findViewById(R.id.editGear1);
         editGear2 = (EditText) findViewById(R.id.editGear2);
@@ -171,7 +176,10 @@ public class RecordingActivity extends AppCompatActivity {
     }
 
     public void Save(View view) {
-        String info = "test";
-        Log.i("SAVE", info);
+        Globals g = (Globals)getApplication();
+        VehicleData vehicleData = g.getCurrentVehicleData();
+        Toast.makeText(getBaseContext(),"Selected " + vehicleData.getName() + " for dyno", Toast.LENGTH_LONG).show();
+
+        txtCurrentVehicle.setText("Vehicle: " + vehicleData.getName());
     }
 }

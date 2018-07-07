@@ -18,7 +18,8 @@
         android:id="@+id/vehicles_list_view"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:clickable="true">
+        android:clickable="true"
+        android:choiceMode="singleChoice">
     </ListView>
 
 </LinearLayout>

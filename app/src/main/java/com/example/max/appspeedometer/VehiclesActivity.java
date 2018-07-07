@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class VehiclesActivity extends AppCompatActivity {
 
+    ArrayList<VehicleData> vehicles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class VehiclesActivity extends AppCompatActivity {
         });
 
         //list view array stuff
-        ArrayList<VehicleData> vehicles = new ArrayList<>();
+        vehicles = new ArrayList<>();
         VehicleData vehicle1 = new VehicleData();
         vehicle1.setName("Miata");
         vehicles.add(vehicle1);
@@ -51,7 +53,9 @@ public class VehiclesActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getBaseContext(),"Click ListItem Number " + position, Toast.LENGTH_LONG).show();
+                Globals g = (Globals)getApplication();
+                g.setCurrentVehicleData(vehicles.get(position));
+                Toast.makeText(getBaseContext(),"Selected " + vehicles.get(position).getName() + " for dyno", Toast.LENGTH_LONG).show();
             }
         });
     }
