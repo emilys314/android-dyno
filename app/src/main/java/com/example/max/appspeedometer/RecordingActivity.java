@@ -24,15 +24,6 @@ public class RecordingActivity extends AppCompatActivity {
     private TextView txtMaxAccel;
     private Button btnToggle;
     private GPSInfo gps;
-    private EditText editGear1;
-    private EditText editGear2;
-    private EditText editGear3;
-    private EditText editGear4;
-    private EditText editGearFinal;
-    private EditText editTireRadius;
-    private EditText editWeight;
-    private EditText editCurrentGear;
-
     private TextView txtCurrentVehicle;
 
     private boolean record = true;
@@ -51,27 +42,28 @@ public class RecordingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
 
+        //gettings references to xml objects
         txtSpeed = (TextView) findViewById(R.id.txtSpeed);
         txtMaxSpeed = (TextView) findViewById(R.id.txtMaxSpeed);
         txtAccel = (TextView) findViewById(R.id.txtAccel);
         txtMaxAccel = (TextView) findViewById(R.id.txtMaxAccel);
         btnToggle = (Button) findViewById(R.id.btnToggleTable);
-
         txtCurrentVehicle = (TextView) findViewById(R.id.textRecordingCurrentVehicle);
 
-        editGear1 = (EditText) findViewById(R.id.editGear1);
-        editGear2 = (EditText) findViewById(R.id.editGear2);
-        editGear3 = (EditText) findViewById(R.id.editGear3);
-        editGear4 = (EditText) findViewById(R.id.editGear4);
-        editGearFinal = (EditText) findViewById(R.id.editGearFinal);
-        editTireRadius = (EditText) findViewById(R.id.editTireRadius);
-        editWeight = (EditText) findViewById(R.id.editTireRadius);
-        editCurrentGear = (EditText) findViewById(R.id.editCurrentGear);
-
+        //gps stuff
         gps = new MyGPSInfo();
         gps.startListening(this.getApplicationContext());
-        vehicleData = new VehicleData();
 
+        //vehicle data settings
+        vehicleData = new VehicleData();
+        Globals g = (Globals)getApplication();
+        if(g.getCurrentVehicleData() != null) {
+            vehicleData = g.getCurrentVehicleData();
+            Toast.makeText(getBaseContext(), "Selected " + vehicleData.getName() + " for dyno", Toast.LENGTH_LONG).show();
+        }
+        txtCurrentVehicle.setText("Vehicle: " + vehicleData.getName());
+
+        ////graph stuff//////
         //speed/accel graph
         graphSpeedAccel = (GraphView) findViewById(R.id.graphSpeed);
         graphSpeedAccel.getGridLabelRenderer().setLabelVerticalWidth(45);
@@ -146,18 +138,6 @@ public class RecordingActivity extends AppCompatActivity {
     float calculateHP(float torque, float speed){
         float engineHP = calculateRPM(speed)*torque/5252;
         return engineHP;
-    }
-
-    public void btnUpdate(View view) {
-        vehicleData.setGear1(Float.parseFloat(editGear1.getText().toString()));
-        vehicleData.setGear2(Float.parseFloat(editGear2.getText().toString()));
-        vehicleData.setGear3(Float.parseFloat(editGear3.getText().toString()));
-        vehicleData.setGear4(Float.parseFloat(editGear4.getText().toString()));
-        vehicleData.setGearFinal(Float.parseFloat(editGearFinal.getText().toString()));
-        vehicleData.setTireRadius(Float.parseFloat(editTireRadius.getText().toString()));
-        vehicleData.setWeight(Float.parseFloat(editWeight.getText().toString()));
-        vehicleData.setCurrentGear(Short.parseShort(editCurrentGear.getText().toString()));
-
     }
 
     public void clearMax(View view) {

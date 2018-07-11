@@ -33,12 +33,13 @@ public class EditVehicleActivity extends AppCompatActivity {
     private EditText editDrag;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_vehicle);
 
-        String type = getIntent().getStringExtra("CREATION_TYPE"); //todo do stuff with this, ex "edit" "add" "editstrict"
+        //String type = getIntent().getStringExtra("CREATION_TYPE"); //todo do stuff with this, ex "edit" "add" "editstrict"
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Edit Vehicle");
@@ -60,6 +61,9 @@ public class EditVehicleActivity extends AppCompatActivity {
         editMass  = (EditText) findViewById(R.id.editMass);
         editRadius = (EditText) findViewById(R.id.editRadius);
         editDrag = (EditText) findViewById(R.id.editDrag);
+
+        VehicleData myVehicleData = (VehicleData) getIntent().getParcelableExtra("vehicle_data_extra");
+        name.setText(myVehicleData.getName());
     }
 
     @Override
@@ -77,6 +81,7 @@ public class EditVehicleActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.menu_edit_vehicles_save) {
+
             writeToFile();
             return true;
         }

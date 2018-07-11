@@ -36,7 +36,7 @@ public class VehiclesActivity extends AppCompatActivity {
             }
         });
 
-        //list view array stuff
+        //list view array stuff //todo read list of saved files
         vehicles = new ArrayList<>();
         VehicleData vehicle1 = new VehicleData();
         vehicle1.setName("Miata");
@@ -75,7 +75,7 @@ public class VehiclesActivity extends AppCompatActivity {
             Toast.makeText(VehiclesActivity.this, "Action clicked add", Toast.LENGTH_LONG).show();
 
             Intent intent = new Intent(VehiclesActivity.this, EditVehicleActivity.class);
-            intent.putExtra("CREATION_TYPE", "new"); //todo should also make "edit" option
+            //intent.putExtra("CREATION_TYPE", "new");
             startActivity(intent);
 
             return true;

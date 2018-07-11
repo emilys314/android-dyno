@@ -1,6 +1,7 @@
 package com.example.max.appspeedometer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class VehicleListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<VehicleData> mDataSource;
+    private VehicleData vehicleData;
 
     public VehicleListAdapter(Context context, ArrayList<VehicleData> items) {
         mContext = context;
@@ -48,21 +50,21 @@ public class VehicleListAdapter extends BaseAdapter {
         TextView titleTextView = (TextView) rowView.findViewById(R.id.vehicles_list_item_title);
         ImageButton editImageButton = (ImageButton) rowView.findViewById(R.id.vehicles_list_item_button);
 
-        editImageButton.setOnClickListener(new View.OnClickListener(){
+        //fill in data
+        vehicleData = (VehicleData) getItem(position);
+        titleTextView.setText(vehicleData.getName());
+
+        editImageButton.setOnClickListener(new View.OnClickListener(){  //todo fix it so clicked item corresponds to clicked item haha
             @Override
-            public void onClick(View arg){
-                Toast.makeText(mContext,"Click editImage ", Toast.LENGTH_LONG).show();
+            public void onClick(View view){
+                Toast.makeText(mContext,"Editing " + vehicleData.getName(), Toast.LENGTH_LONG).show();
+
+                Intent intent = new Intent(mContext, EditVehicleActivity.class);
+                intent.putExtra("vehicle_data_extra", vehicleData);
+                view.getContext().startActivity(intent);
             }
         });
 
-
-        //fill in data
-        VehicleData vehicleData = (VehicleData) getItem(position);
-        titleTextView.setText(vehicleData.getName());
-
-
         return rowView;
     }
-
-
 }

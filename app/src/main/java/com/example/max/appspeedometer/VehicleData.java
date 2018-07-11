@@ -2,6 +2,8 @@ package com.example.max.appspeedometer;
 
 import android.content.Context;
 import android.media.MediaScannerConnection;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,7 +16,7 @@ import java.io.IOException;
  * Created by Max on 5/23/2018.
  */
 
-public class VehicleData {
+public class VehicleData implements Parcelable {
     private String name = "";
     private String desc = "";
     private float gear1 = 3.1f;
@@ -25,10 +27,54 @@ public class VehicleData {
     private float tireRadius = 11.5f;
     private float weight = 2300;
     private float drag = 0.3f;
-    private short currentGear = 2;
+    private int currentGear = 2;
 
     VehicleData(){
     }
+
+    VehicleData(Parcel in){
+        name = in.readString();
+        desc = in.readString();
+        gear1 = in.readFloat();
+        gear2 = in.readFloat();
+        gear3 = in.readFloat();
+        gear4 = in.readFloat();
+        gearFinal = in.readFloat();
+        tireRadius = in.readFloat();
+        weight = in.readFloat();
+        drag = in.readFloat();
+        currentGear = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags){
+        dest.writeString(name);
+        dest.writeString(desc);
+        dest.writeFloat(gear1);
+        dest.writeFloat(gear2);
+        dest.writeFloat(gear3);
+        dest.writeFloat(gear4);
+        dest.writeFloat(gearFinal);
+        dest.writeFloat(tireRadius);
+        dest.writeFloat(weight);
+        dest.writeFloat(drag);
+        dest.writeInt(currentGear);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<VehicleData> CREATOR = new Parcelable.Creator<VehicleData>(){
+        public VehicleData createFromParcel(Parcel in){
+            return new VehicleData(in);
+        }
+
+        public VehicleData[] newArray(int size) {
+            return new VehicleData[size];
+        }
+    };
 
     public void writeToFile(Context context) {
         try {
@@ -149,11 +195,11 @@ public class VehicleData {
         this.drag = drag;
     }
 
-    public short getCurrentGear() {
+    public int getCurrentGear() {
         return currentGear;
     }
 
-    public void setCurrentGear(short currentGear) {
+    public void setCurrentGear(int currentGear) {
         this.currentGear = currentGear;
     }
 }
