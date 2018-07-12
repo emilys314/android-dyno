@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Max on 6/20/2018.
@@ -20,7 +21,6 @@ public class VehicleListAdapter extends BaseAdapter {
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<VehicleData> mDataSource;
-    private VehicleData vehicleData;
 
     public VehicleListAdapter(Context context, ArrayList<VehicleData> items) {
         mContext = context;
@@ -51,8 +51,10 @@ public class VehicleListAdapter extends BaseAdapter {
         ImageButton editImageButton = (ImageButton) rowView.findViewById(R.id.vehicles_list_item_button);
 
         //fill in data
-        vehicleData = (VehicleData) getItem(position);
+        final VehicleData vehicleData = (VehicleData) getItem(position);    //must use final
         titleTextView.setText(vehicleData.getName());
+        //final HashMap<String, VehicleData> vehicleDataHashMap = new HashMap<>();
+        //vehicleDataHashMap.put("name", vehicleData);
 
         editImageButton.setOnClickListener(new View.OnClickListener(){  //todo fix it so clicked item corresponds to clicked item haha
             @Override
