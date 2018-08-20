@@ -11,6 +11,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Created by Max on 5/23/2018.
@@ -29,7 +30,29 @@ public class VehicleData implements Parcelable {
     private float drag = 0.3f;
     private int currentGear = 2;
 
+
+
     VehicleData(){
+    }
+
+    VehicleData(File file){
+        try {
+            Scanner sc = new Scanner(file);
+            name = sc.nextLine();
+            desc = sc.nextLine();
+            gear1 = Float.parseFloat(sc.nextLine());
+            gear2 = Float.parseFloat(sc.nextLine());
+            gear3 = Float.parseFloat(sc.nextLine());
+            gear4 = Float.parseFloat(sc.nextLine());
+            gearFinal = Float.parseFloat(sc.nextLine());
+            tireRadius = Float.parseFloat(sc.nextLine());
+            weight = Float.parseFloat(sc.nextLine());
+            drag = Float.parseFloat(sc.nextLine());
+            currentGear = Integer.parseInt(sc.nextLine());
+        }
+        catch(Exception e){
+            System.out.println("Can't read vehicle file" + e.getMessage());
+        }
     }
 
     VehicleData(Parcel in){
@@ -76,6 +99,15 @@ public class VehicleData implements Parcelable {
         }
     };
 
+    public boolean exists(Context context){
+        String fileName = name.replaceAll(" ", "_");
+        File testFile = new File(context.getExternalFilesDir(null), "Vehicles"+File.separator+"vehicle_"+fileName+".txt");
+        if (testFile.exists())
+            return true;
+        else
+            return false;
+    }
+
     public void writeToFile(Context context) {
         try {
             //create Vehicles folder if doesn't exist
@@ -86,15 +118,15 @@ public class VehicleData implements Parcelable {
 
             // Creates a file in the public internal storage
             String fileName = name.replaceAll(" ", "_");
-            File testFile = new File(context.getExternalFilesDir(null), "Vehicles"+File.separator+"vehicle_"+fileName+".txt");
-            if (!testFile.exists()) {
-                testFile.createNewFile();
+            File file = new File(context.getExternalFilesDir(null), "Vehicles"+File.separator+"vehicle_"+fileName+".txt");
+            if (file.exists()) {
+                file.delete();
             } else {
-                Toast.makeText(context, "Vehicle file already exists!" , Toast.LENGTH_LONG).show();
+                file.createNewFile();
             }
 
             // Adds a line to the file
-            BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
             writer.write(name+"\r\n");      //'r' and 'n' needed for windows text viewer
             writer.write(desc+"\r\n");
             writer.write(String.valueOf(gear1)+"\r\n");
@@ -108,8 +140,9 @@ public class VehicleData implements Parcelable {
             writer.write(String.valueOf(currentGear)+"\r\n");
             writer.close();
             // Refresh data to see when the device is plugged in computer.
-            MediaScannerConnection.scanFile(context, new String[]{testFile.toString()},null,null);
-            Toast.makeText(context, "Vehicle file saved!" , Toast.LENGTH_LONG).show();
+            MediaScannerConnection.scanFile(context, new String[]{file.toString()},null,null);
+
+            Toast.makeText(context, name+" file saved!" , Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Log.e("ReadWriteFile", "Unable to write to the TestFile.txt file." + e.getMessage());
         }

@@ -32,14 +32,14 @@ public class EditVehicleActivity extends AppCompatActivity {
     private EditText editRadius;
     private EditText editDrag;
 
-
+    private String prevName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_vehicle);
 
-        //String type = getIntent().getStringExtra("CREATION_TYPE"); //todo do stuff with this, ex "edit" "add" "editstrict"
+        //String type = getIntent().getStringExtra("CREATION_TYPE");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Edit Vehicle");
@@ -81,6 +81,11 @@ public class EditVehicleActivity extends AppCompatActivity {
             return true;
         }
         if (id == R.id.menu_edit_vehicles_save) {
+            //todo saves as same file if same name
+            //todo removes old data
+
+            //todo saves as new file if different name
+            //todo prompts for overwrite if already exists as
 
             writeToFile();
             return true;

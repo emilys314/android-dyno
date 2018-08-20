@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VehiclesActivity extends AppCompatActivity {
 
@@ -37,13 +38,14 @@ public class VehiclesActivity extends AppCompatActivity {
         });
 
         //list view array stuff //todo read list of saved files
-        vehicles = new ArrayList<>();
-        VehicleData vehicle1 = new VehicleData();
-        vehicle1.setName("Miata");
-        vehicles.add(vehicle1);
-        VehicleData vehicle2 = new VehicleData();
-        vehicle2.setName("FRS");
-        vehicles.add(vehicle2);
+//        vehicles = new ArrayList<>();
+//        VehicleData vehicle1 = new VehicleData();
+//        vehicle1.setName("Miata");
+//        vehicles.add(vehicle1);
+//        VehicleData vehicle2 = new VehicleData();
+//        vehicle2.setName("FRS");
+//        vehicles.add(vehicle2);
+        vehicles = getSavedVehicles();
 
         //list view stuff
         VehicleListAdapter vehicleListAdapter = new VehicleListAdapter(this, vehicles);
@@ -60,6 +62,19 @@ public class VehiclesActivity extends AppCompatActivity {
         });
     }
 
+    private ArrayList<VehicleData> getSavedVehicles(){
+        ArrayList<VehicleData> vehicleList = new ArrayList<>();
+        File folder = new File(getApplicationContext().getExternalFilesDir(null),"Vehicles");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++){
+            if (listOfFiles[i].isFile()) {
+                vehicleList.add(new VehicleData(listOfFiles[i]));
+            }
+        }
+
+        return vehicleList;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
