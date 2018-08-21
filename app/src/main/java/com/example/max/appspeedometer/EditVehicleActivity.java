@@ -63,7 +63,19 @@ public class EditVehicleActivity extends AppCompatActivity {
         editDrag = (EditText) findViewById(R.id.editDrag);
 
         VehicleData myVehicleData = (VehicleData) getIntent().getParcelableExtra("vehicle_data_extra");
-        name.setText(myVehicleData.getName());
+        //editing an existing vehicle
+        if(myVehicleData != null) {
+            name.setText(myVehicleData.getName());
+            desc.setText(myVehicleData.getDesc());
+            edit1st.setText(String.valueOf(myVehicleData.getGear1()));
+            edit2nd.setText(String.valueOf(myVehicleData.getGear2()));
+            edit3rd.setText(String.valueOf(myVehicleData.getGear3()));
+            edit4th.setText(String.valueOf(myVehicleData.getGear4()));
+            editFinal.setText(String.valueOf(myVehicleData.getGearFinal()));
+            editMass.setText(String.valueOf(myVehicleData.getWeight()));
+            editRadius.setText(String.valueOf(myVehicleData.getTireRadius()));
+            editDrag.setText(String.valueOf(myVehicleData.getDrag()));
+        }
     }
 
     @Override

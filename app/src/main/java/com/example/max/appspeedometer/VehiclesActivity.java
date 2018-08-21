@@ -20,6 +20,8 @@ import java.util.List;
 public class VehiclesActivity extends AppCompatActivity {
 
     ArrayList<VehicleData> vehicles;
+    ListView listView;
+    VehicleListAdapter vehicleListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,19 +39,11 @@ public class VehiclesActivity extends AppCompatActivity {
             }
         });
 
-        //list view array stuff //todo read list of saved files
-//        vehicles = new ArrayList<>();
-//        VehicleData vehicle1 = new VehicleData();
-//        vehicle1.setName("Miata");
-//        vehicles.add(vehicle1);
-//        VehicleData vehicle2 = new VehicleData();
-//        vehicle2.setName("FRS");
-//        vehicles.add(vehicle2);
         vehicles = getSavedVehicles();
 
         //list view stuff
-        VehicleListAdapter vehicleListAdapter = new VehicleListAdapter(this, vehicles);
-        ListView listView = (ListView) findViewById(R.id.vehicles_list_view);
+        vehicleListAdapter = new VehicleListAdapter(this, vehicles);
+        listView = (ListView) findViewById(R.id.vehicles_list_view);
         listView.setAdapter(vehicleListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -60,6 +54,16 @@ public class VehiclesActivity extends AppCompatActivity {
                 Toast.makeText(getBaseContext(),"Selected " + vehicles.get(position).getName() + " for dyno", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        vehicles.clear();
+        vehicles.addAll(getSavedVehicles());    //has to refresh this way to detect change
+        vehicleListAdapter.notifyDataSetChanged();
+
+        Toast.makeText(getApplicationContext(),"onResume", Toast.LENGTH_LONG).show();
     }
 
     private ArrayList<VehicleData> getSavedVehicles(){
