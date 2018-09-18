@@ -148,6 +148,26 @@ public class VehicleData implements Parcelable {
         }
     }
 
+    public void deleteFile(Context context){
+        String fileName = "default.txt";
+        try {
+            //create Vehicles folder if doesn't exist
+            File folder = new File(context.getExternalFilesDir(null), "Vehicles");
+            if(!folder.exists()) {
+                folder.mkdir();
+            }
+
+            // Creates a file in the public internal storage
+            fileName = name.replaceAll(" ", "_");
+            File file = new File(context.getExternalFilesDir(null), "Vehicles"+File.separator+"vehicle_"+fileName+".txt");
+            if (file.exists()) {
+                file.delete();
+            }
+        } catch (Exception e) {
+            Log.e("ReadWriteFile", "Unable to delete " + fileName + "; " + e.getMessage());
+        }
+    }
+
     public String getName() {
         return name;
     }

@@ -1,8 +1,10 @@
 package com.example.max.appspeedometer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -89,7 +91,18 @@ public class EditVehicleActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.menu_edit_vehicles_delete) {
-            Toast.makeText(EditVehicleActivity.this, "Action clicked delete", Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(this)
+                    .setTitle("Confirm delete")
+                    .setMessage("Are you sure you want to delete " + name.getText() + " ?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            makeVehicleObject().deleteFile(getApplicationContext());
+                            onBackPressed();
+                        }})
+                    .setNegativeButton(android.R.string.no, null).show();
+
             return true;
         }
         if (id == R.id.menu_edit_vehicles_save) {
@@ -99,13 +112,14 @@ public class EditVehicleActivity extends AppCompatActivity {
             //todo saves as new file if different name
             //todo prompts for overwrite if already exists as
 
-            writeToFile();
+
+            makeVehicleObject().writeToFile(getApplicationContext());
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void writeToFile() {
+    private VehicleData makeVehicleObject() {
         VehicleData vehicleData = new VehicleData();
         vehicleData.setName(name.getText().toString());
         vehicleData.setDesc(desc.getText().toString());
@@ -118,6 +132,6 @@ public class EditVehicleActivity extends AppCompatActivity {
         vehicleData.setTireRadius(Float.parseFloat(editRadius.getText().toString()));
         vehicleData.setDrag(Float.parseFloat(editDrag.getText().toString()));
 
-        vehicleData.writeToFile(getApplicationContext());
+        return vehicleData;
     }
 }
