@@ -8,7 +8,7 @@
     tools:context="com.example.max.appspeedometer.RecordingActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -16,38 +16,48 @@
             android:id="@+id/textRecordingCurrentVehicle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Vehicle: not selected!"
-            android:textSize="17dp"/>
+            android:text="No vehicle selected!"
+            android:textStyle="bold"
+            android:textSize="18dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit"/>
+            android:text="Edit"
+            android:onClick="recordingEditVehicle"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Change"/>
+            android:text="Change"
+            android:onClick="recordingChangeVehicle"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/graphAccel"
-        android:orientation="horizontal"
-        android:id="@+id/textLinear">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/txtSpeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="MPH: "/>
+            android:text="MPH: "
+            android:textColor="@color/Speed"/>
 
         <TextView
             android:id="@+id/txtMaxSpeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="Max:"/>
+            android:text="Max:"
+            android:textColor="@color/Speed"/>
 
         <TextView
             android:id="@+id/txtAccel"
@@ -55,14 +65,16 @@
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:layout_marginLeft="50dp"
-            android:text="G:"/>
+            android:text="G:"
+            android:textColor="@color/Accel"/>
 
         <TextView
             android:id="@+id/txtMaxAccel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
-            android:text="Max:"/>
+            android:text="Max:"
+            android:textColor="@color/Accel"/>
 
     </LinearLayout>
 
@@ -70,6 +82,47 @@
         android:layout_width="match_parent"
         android:layout_height="150dip"
         android:id="@+id/graphSpeed" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/graphSpeed"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtTorque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="Torque: "
+            android:textColor="@color/Torque"/>
+
+        <TextView
+            android:id="@+id/txtMaxTorque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="Max:"
+            android:textColor="@color/Torque"/>
+
+        <TextView
+            android:id="@+id/txtPower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:layout_marginLeft="50dp"
+            android:text="Power:"
+            android:textColor="@color/Power"/>
+
+        <TextView
+            android:id="@+id/txtMaxPower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="3dp"
+            android:text="Max:"
+            android:textColor="@color/Power"/>
+
+    </LinearLayout>
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
@@ -91,15 +144,15 @@
             android:id="@+id/btnToggleTable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Toggle"
+            android:text="Started"
             android:onClick="Toggle"/>
 
         <Button
-            android:id="@+id/btnSave"
+            android:id="@+id/btnTest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:onClick="Save"/>
+            android:text="Test"
+            android:onClick="Test"/>
 
     </LinearLayout>
 
