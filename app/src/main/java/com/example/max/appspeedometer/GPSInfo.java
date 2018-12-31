@@ -90,4 +90,8 @@ public abstract class GPSInfo implements LocationListener {
         float tmp = number * pow;
         return ( (float) ( (int) ((tmp - (int) tmp) >= 0.5f ? tmp + 1 : tmp) ) ) / pow;
     }
+
+    public long getCurrTime() {
+        return currTime;
+    }
 }

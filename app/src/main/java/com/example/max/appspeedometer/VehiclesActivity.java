@@ -31,7 +31,8 @@ public class VehiclesActivity extends AppCompatActivity {
         //toolbar stuff
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("Vehicles");
-        setSupportActionBar(toolbar);getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v){

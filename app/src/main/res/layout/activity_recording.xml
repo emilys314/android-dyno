@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     tools:context="com.example.max.appspeedometer.RecordingActivity">
 
     <LinearLayout
@@ -35,6 +37,42 @@
             android:layout_height="wrap_content"
             android:text="Change"
             android:onClick="recordingChangeVehicle"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textRecordingGear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gear:"
+            android:textStyle="bold"
+            android:textSize="18dp"/>
+
+        <EditText
+            android:id="@+id/editRecordingGear"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:text="2" />
+
+        <TextView
+            android:id="@+id/textRecordingWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Passenger Weights:"
+            android:textStyle="bold"
+            android:textSize="18dp"/>
+
+        <EditText
+            android:id="@+id/editRecordingWeight"
+            android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:text="150" />
     </LinearLayout>
 
     <LinearLayout
@@ -129,31 +167,12 @@
         android:layout_height="200dip"
         android:id="@+id/graphAccel" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/btnToggleTable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start Run"
+        android:onClick="onClickRecord"/>
 
-        <Button
-            android:id="@+id/btnClearMax"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear"
-            android:onClick="clearMax"/>
-
-        <Button
-            android:id="@+id/btnToggleTable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Started"
-            android:onClick="Toggle"/>
-
-        <Button
-            android:id="@+id/btnTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Test"
-            android:onClick="Test"/>
-
-    </LinearLayout>
 
 </LinearLayout>

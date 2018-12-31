@@ -112,8 +112,17 @@ public class EditVehicleActivity extends AppCompatActivity {
             //todo saves as new file if different name
             //todo prompts for overwrite if already exists as
 
-
             makeVehicleObject().writeToFile(getApplicationContext());
+
+            //todo update global vehicle if it's the one selected
+            Globals g = (Globals)getApplication();
+            if(g.getCurrentVehicleData() != null) {
+                VehicleData tempVehicleData = g.getCurrentVehicleData();
+                if (tempVehicleData.getName().equals(name))
+                    g.setCurrentVehicleData(makeVehicleObject());
+
+            }
+
             return true;
         }
         return super.onOptionsItemSelected(item);

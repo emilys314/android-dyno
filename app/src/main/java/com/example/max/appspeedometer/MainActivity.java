@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickLogs(View view) {
+        Intent logs = new Intent(MainActivity.this, LogsActivity.class   );
+        startActivity(logs);
     }
 
     public void onClickVehicles(View view) {

@@ -7,7 +7,7 @@ import android.app.Application;
  */
 
 public class Globals extends Application {
-    private VehicleData currentVehicleData;     //vehicle data to use for dyno
+    private VehicleData currentVehicleData = new VehicleData();     //vehicle data to use for dyno
 
     public VehicleData getCurrentVehicleData() {
         return currentVehicleData;

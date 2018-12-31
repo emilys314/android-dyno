@@ -18,7 +18,8 @@ import java.util.Scanner;
  */
 
 public class VehicleData implements Parcelable {
-    private String name = "";
+    //default values
+    private String name = "default";
     private String desc = "";
     private float gear1 = 3.1f;
     private float gear2 = 1.9f;
@@ -26,15 +27,15 @@ public class VehicleData implements Parcelable {
     private float gear4 = 1.0f;
     private float gearFinal = 4.3f;
     private float tireRadius = 11.5f;
-    private float weight = 2300;
+    private float weight = 2700;
     private float drag = 0.3f;
     private int currentGear = 2;
 
-
-
+    //default constructor
     VehicleData(){
     }
 
+    //create vehicle based on file path
     VehicleData(File file){
         try {
             Scanner sc = new Scanner(file);
@@ -55,6 +56,7 @@ public class VehicleData implements Parcelable {
         }
     }
 
+    //vehicle data for passing through activities
     VehicleData(Parcel in){
         name = in.readString();
         desc = in.readString();
@@ -69,6 +71,7 @@ public class VehicleData implements Parcelable {
         currentGear = in.readInt();
     }
 
+    //for passing through activities
     @Override
     public void writeToParcel(Parcel dest, int flags){
         dest.writeString(name);
@@ -84,11 +87,13 @@ public class VehicleData implements Parcelable {
         dest.writeInt(currentGear);
     }
 
+    //for passing through activities
     @Override
     public int describeContents() {
         return 0;
     }
 
+    //for passing through activities
     public static final Parcelable.Creator<VehicleData> CREATOR = new Parcelable.Creator<VehicleData>(){
         public VehicleData createFromParcel(Parcel in){
             return new VehicleData(in);
@@ -99,6 +104,7 @@ public class VehicleData implements Parcelable {
         }
     };
 
+    //Return boolean if vehicle file name already exists
     public boolean exists(Context context){
         String fileName = name.replaceAll(" ", "_");
         File testFile = new File(context.getExternalFilesDir(null), "Vehicles"+File.separator+"vehicle_"+fileName+".txt");
@@ -108,6 +114,7 @@ public class VehicleData implements Parcelable {
             return false;
     }
 
+    //write vehicle data to file
     public void writeToFile(Context context) {
         try {
             //create Vehicles folder if doesn't exist
@@ -148,6 +155,7 @@ public class VehicleData implements Parcelable {
         }
     }
 
+    //delete the vehicle
     public void deleteFile(Context context){
         String fileName = "default.txt";
         try {

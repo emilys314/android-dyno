@@ -3,4 +3,5 @@
     <string name="title_activity_record">RecordActivity</string>
     <string name="title_activity_vehicles">VehiclesActivity</string>
     <string name="vehicles">Vehicles</string>
+    <string name="title_activity_logs">LogsActivity</string>
 </resources>

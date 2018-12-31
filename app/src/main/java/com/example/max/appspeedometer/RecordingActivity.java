@@ -1,12 +1,14 @@
 package com.example.max.appspeedometer;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +18,9 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class RecordingActivity extends AppCompatActivity {
 
+    //xml gui objects
+    private EditText editGear;
+    private EditText editWeight;
     private TextView txtSpeed;
     private TextView txtMaxSpeed;
     private TextView txtAccel;
@@ -28,7 +33,7 @@ public class RecordingActivity extends AppCompatActivity {
     private GPSInfo gps;
     private TextView txtCurrentVehicle;
 
-    private boolean record = true;
+    private boolean record = false;
     private boolean refreshGraph = true;
     private GraphView graphSpeedAccel;
     private GraphView graphTorquePower;
@@ -38,14 +43,18 @@ public class RecordingActivity extends AppCompatActivity {
     private LineGraphSeries<DataPoint> seriesPower;
     private double tickCounter = 0d;
 
-    private VehicleData vehicleData;
+    private VehicleData vehicleData;        //vehicle data object
+    private DynoRunData dynoRunData;
 
+    //onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recording);
 
         //gettings references to xml objects
+        editGear = (EditText) findViewById(R.id.editRecordingGear);
+        editWeight = (EditText) findViewById(R.id.editRecordingWeight);
         txtSpeed = (TextView) findViewById(R.id.txtSpeed);
         txtMaxSpeed = (TextView) findViewById(R.id.txtMaxSpeed);
         txtAccel = (TextView) findViewById(R.id.txtAccel);
@@ -110,6 +119,7 @@ public class RecordingActivity extends AppCompatActivity {
 
     }
 
+    //onResume refreshes vehicle data
     @Override
     protected void onResume() {
         super.onResume();
@@ -126,17 +136,19 @@ public class RecordingActivity extends AppCompatActivity {
             txtCurrentVehicle.setText("No vehicle selected!");
     }
 
+    //gps info accessor class
     class MyGPSInfo extends GPSInfo{
         float currentTorque = 0.0f;
         float maxTorque = 0.0f;
         float currentPower = 0.0f;
         float maxPower = 0.0f;
 
+        //update data when gps signal refreshes
         @Override
         void onUpdateLocation() {
             if(refreshGraph) {
                 seriesSpeed.appendData(new DataPoint(tickCounter, currentSpeed), true, 60);
-                seriesAccel.appendData(new DataPoint(tickCounter, (currentAccelG)), true, 40);
+                seriesAccel.appendData(new DataPoint(tickCounter, currentAccelG), true, 40);
 
                 if(currentAccelG >= 0) {
                     currentTorque = calculateTorque(currentAccelG);
@@ -153,36 +165,44 @@ public class RecordingActivity extends AppCompatActivity {
 
                 txtSpeed.setText("MPH: " + String.valueOf(round2(currentSpeed, 2)));
                 txtMaxSpeed.setText("Max:  " + String.valueOf(round2(maxSpeed, 2)));
-                txtAccel.setText("G:   " + String.valueOf(round2((currentAccelG), 2)));
+                txtAccel.setText("G:   " + String.valueOf(round2(currentAccelG, 2)));
                 txtMaxAccel.setText("Max: " + String.valueOf(round2((maxAccelG), 2)));
 
                 if (currentTorque > maxTorque) maxTorque = currentTorque;
                 if (currentPower > maxPower) maxPower = currentPower;
                 txtTorque.setText("Torque: " + String.valueOf(round2(currentTorque, 2)));
                 txtMaxTorque.setText("Max:  " + String.valueOf(round2(maxTorque, 2)));
-                txtPower.setText("Power:   " + String.valueOf(round2((currentPower), 2)));
+                txtPower.setText("Power:   " + String.valueOf(round2(currentPower, 2)));
                 txtMaxPower.setText("Max: " + String.valueOf(round2((maxPower), 2)));
+
+                if(record){
+                    //put stuff into dyno run file
+                    dynoRunData.addToLists(getCurrTime(), currentSpeed, currentAccelG, currentTorque, currentPower);
+                }
             }
         }
     }
 
+    //returns RPM based on speed and local vehicle data
     float calculateRPM(float speed){
         float engineRPM = (vehicleData.getGearFinal()*vehicleData.getGear2()*speed)/(0.00595f*vehicleData.getGearFinal());
         return engineRPM;
     }
 
+    //return ft*lbs of torque based on G's and local vehicle data
     float calculateTorque(float AccelG){
         float wheelTorque = AccelG*vehicleData.getWeight();
         float engineTorque = (wheelTorque*vehicleData.getTireRadius())/(vehicleData.getGearFinal()*vehicleData.getGear2()*12);
         return engineTorque;
     }
 
+    //return Horsepower based on given torque and speed and local vehicle data
     float calculateHP(float torque, float speed){
         float engineHP = calculateRPM(speed)*torque/5252;
         return engineHP;
     }
 
-
+    //edit currently selected vehicle from within the dyno recording activity
     public void recordingEditVehicle(View view) {
         if (vehicleData != null && !vehicleData.getName().equals(null) && vehicleData.getName().length() > 0) {
             Toast.makeText(getApplicationContext(), "Editing " + vehicleData.getName(), Toast.LENGTH_LONG).show();
@@ -196,23 +216,50 @@ public class RecordingActivity extends AppCompatActivity {
         }
     }
 
+    //change the currently selected vehicle from within the dyno recording activity
     public void recordingChangeVehicle(View view) {
         Intent vehicles = new Intent(this, VehiclesActivity.class   );
         startActivity(vehicles);
     }
 
+    //listens for selected gear input to change
+    private TextWatcher gearTextWatcher() {
+        return new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        };
+    }
     public void clearMax(View view) {
         gps.clearMax(view);
     }
 
-    public void Toggle(View view) {
+    //onClick function for starting / saving dyno runs
+    public void onClickRecord(View view) {
+        //start the dyno run
         if(record == false){
             record = true;
-            btnToggle.setText("Started");
+            dynoRunData = new DynoRunData(gps.getCurrTime());
+            dynoRunData.setVehicleData(vehicleData);
+            dynoRunData.setSelectedGear(Integer.parseInt(editGear.getText().toString()));
+            dynoRunData.setPassengerWeight(Integer.parseInt(editWeight.getText().toString()));
+
+            btnToggle.setText("Stop and Save");
         }
+        //stop the dyno run
         else{
             record = false;
-            btnToggle.setText("Stopped");
+            dynoRunData.writeToFile(this);
+            btnToggle.setText("Start Run");
         }
     }
 
